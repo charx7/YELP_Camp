@@ -55,7 +55,7 @@ app.post("/sitiosparaacampar", function(request, response){
     var nuevoSitio = {
             nombreCampamento: nuevoNombre,
             imagenCampamento: nuevaImagen 
-    }
+    };
     campamentos.push(nuevoSitio);
     // Redirigir a la pagina de sitiosparaacampar con metodo GET
     response.redirect("/sitiosparaacampar");
@@ -63,7 +63,7 @@ app.post("/sitiosparaacampar", function(request, response){
 
 // Ruta para crear un nuevo campamento
 app.get("/sitiosparaacampar/nuevo", function(request, response){
-    response.render("nuevoCampamento")
+    response.render("nuevoCampamento");
 });
 
 // Listener para establecer puerto
