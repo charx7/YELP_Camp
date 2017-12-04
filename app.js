@@ -5,6 +5,7 @@ var app = express();
 var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
 
+
 // Definimos temporalmente uno arreglo con sitios para acampar en formato objeto de javacript
 var campamentos = [
     {
@@ -30,6 +31,24 @@ app.get("/sitiosparaacampar", function(request, response){
     response.render("sitiosparaacampar", {campamentos: campamentos});
 });
 
+// Ruteo para el metodo POST de aniadir sitios para acampar
+app.post("/sitiosparaacampar", function(request, response){
+    // Sacar los datos de la forma y aniadirla al arreglo de campamentos
+    var nuevoNombre = request.body.nombreNuevoCampamento;
+    var nuevaImagen = request.body.nombreNuevaImagen;
+    var nuevoSitio = {
+            nombreCampamento: nuevoNombre,
+            imagenCampamento: nuevaImagen 
+    }
+    campamentos.push(nuevoSitio);
+    // Redirigir a la pagina de sitiosparaacampar con metodo GET
+    response.redirect("/sitiosparaacampar");
+});
+
+// Ruta para crear un nuevo campamento
+app.get("/sitiosparaacampar/nuevo", function(request, response){
+    response.render("nuevoCampamento")
+});
 
 // Listener para establecer puerto
 app.listen(3000, function(){
