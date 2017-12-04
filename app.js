@@ -17,19 +17,21 @@ var esquemaCampamento = new mongoose.Schema({
 // Compilando el modelo
 var campamentos = mongoose.model("Campamento", esquemaCampamento);
 // Creando un campamento
-campamentos.create(
-    {
-        nombreCampamento: "LolXDMafiaCampamento",
-        imagenCampamento: "https://assets.vice.com/content-images/contentimage/no-slug/d8582d38918fa398a67e269684fefb67.jpg"
-    }, function(error, resultado){
-    if(error) {
-        console.log("Aiudaa Error");
-        console.log(error);
-    } else {
-        console.log("Nuevo Campamento Creado");
-        console.log(resultado);
-    }
-});
+// campamentos.create(
+//     {
+//         nombreCampamento: "LolXDMafiaCampamento",
+//         imagenCampamento: "https://assets.vice.com/content-images/contentimage/no-slug/d8582d38918fa398a67e269684fefb67.jpg"
+//     }, function(error, resultado){
+//     if(error) {
+//         console.log("Aiudaa Error");
+//         console.log(error);
+//     } else {
+//         console.log("Nuevo Campamento Creado");
+//         console.log(resultado);
+//     }
+// });
+
+
 
 // Definimos temporalmente uno arreglo con sitios para acampar en formato objeto de javacript
 // var campamentos = [
@@ -69,7 +71,17 @@ app.get("/", function(request, response){
 
 app.get("/sitiosparaacampar", function(request, response){
     // Pasa el objeto de arreglo de campamentos
-    response.render("sitiosparaacampar", {campamentos: campamentos});
+    //response.render("sitiosparaacampar", {campamentos: campamentos});
+
+    // Sacar todos los campamentos de la BDD
+    campamentos.find({}, function(error, resultado) {
+        if(error){
+            console.log("Aiuda error");
+            console.log(error);
+        } else {
+            response.render("sitiosparaacampar", {campamentos: resultado});
+        }
+    });
 });
 
 // Ruteo para el metodo POST de aniadir sitios para acampar
