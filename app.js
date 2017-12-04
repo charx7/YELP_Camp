@@ -93,9 +93,16 @@ app.post("/sitiosparaacampar", function(request, response){
             nombreCampamento: nuevoNombre,
             imagenCampamento: nuevaImagen 
     };
-    campamentos.push(nuevoSitio);
-    // Redirigir a la pagina de sitiosparaacampar con metodo GET
-    response.redirect("/sitiosparaacampar");
+    // Crear un nuevo campamento en la BDD de Mongo
+    campamentos.create(nuevoSitio, function(error,respuesta) {
+        if(error){
+            console.log("Error Creando el campamento");
+        } else {
+            // Redirigir a la pagina de sitiosparaacampar con metodo GET
+            response.redirect("/sitiosparaacampar");
+        }
+    });
+    //campamentos.push(nuevoSitio);
 });
 
 // Ruta para crear un nuevo campamento
