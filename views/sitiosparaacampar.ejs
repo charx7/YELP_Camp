@@ -1,0 +1,18 @@
+<style>
+    img {
+        height: 100px;
+        width: 150px;
+    }
+</style>
+
+<h1>Sitios para acampar XD</h1>
+<!-- Codigo para desplegar los campamentos con sus imagenes -->
+<% campamentos.forEach(function(elemento){ %>
+    <div>
+        <h4>
+            <%= elemento.nombreCampamento; %>
+        </h4>
+        <img src="<%= elemento.imagenCampamento  %>">      
+    </div>
+    
+<% }); %>
