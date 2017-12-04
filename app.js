@@ -5,34 +5,59 @@ var app = express();
 var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
 
+// Aniadimos la importacion de Mongoose
+var mongoose = require("mongoose");
+// Conectando a la BDD desde localhost (necesita estar el demonio corriendo y creando la BDD 
+mongoose.connect("mongodb://localhost/yelp_camp");
+// Instalacion del Schema de la BDD
+var esquemaCampamento = new mongoose.Schema({
+    nombreCampamento: String,
+    imagenCampamento: String
+});
+// Compilando el modelo
+var campamentos = mongoose.model("Campamento", esquemaCampamento);
+// Creando un campamento
+campamentos.create(
+    {
+        nombreCampamento: "LolXDMafiaCampamento",
+        imagenCampamento: "https://assets.vice.com/content-images/contentimage/no-slug/d8582d38918fa398a67e269684fefb67.jpg"
+    }, function(error, resultado){
+    if(error) {
+        console.log("Aiudaa Error");
+        console.log(error);
+    } else {
+        console.log("Nuevo Campamento Creado");
+        console.log(resultado);
+    }
+});
 
 // Definimos temporalmente uno arreglo con sitios para acampar en formato objeto de javacript
-var campamentos = [
-    {
-        nombreCampamento: "Guslanding",
-        imagenCampamento: "http://cdn.traveler.es/uploads/images/thumbs/es/trav/2/s/2016/02/deja_que_te_invada_el_espiritu_de_los_60_12_ideas_para_unas_vacaciones_hippies_183389546_1200x800.jpg"
-    },
-    {
-        nombreCampamento: "LolXDMafiaCampamento",
-        imagenCampamento: "https://assets.vice.com/content-images/contentimage/no-slug/d8582d38918fa398a67e269684fefb67.jpg"
-    },
-    {
-        nombreCampamento: "OtroLindoSitio",
-        imagenCampamento: "https://static1.squarespace.com/static/55ecd96fe4b0cee523072594/t/5734037a4c2f8582b5859ecd/1463026556921/FlashCamp_HR0075.jpg?format=1500w"
-    },
-    {
-        nombreCampamento: "Guslanding",
-        imagenCampamento: "http://cdn.traveler.es/uploads/images/thumbs/es/trav/2/s/2016/02/deja_que_te_invada_el_espiritu_de_los_60_12_ideas_para_unas_vacaciones_hippies_183389546_1200x800.jpg"
-    },
-    {
-        nombreCampamento: "LolXDMafiaCampamento",
-        imagenCampamento: "https://assets.vice.com/content-images/contentimage/no-slug/d8582d38918fa398a67e269684fefb67.jpg"
-    },
-    {
-        nombreCampamento: "OtroLindoSitio",
-        imagenCampamento: "https://static1.squarespace.com/static/55ecd96fe4b0cee523072594/t/5734037a4c2f8582b5859ecd/1463026556921/FlashCamp_HR0075.jpg?format=1500w"
-    }
-];
+// var campamentos = [
+//     {
+//         nombreCampamento: "Guslanding",
+//         imagenCampamento: "http://cdn.traveler.es/uploads/images/thumbs/es/trav/2/s/2016/02/deja_que_te_invada_el_espiritu_de_los_60_12_ideas_para_unas_vacaciones_hippies_183389546_1200x800.jpg"
+//     },
+//     {
+//         nombreCampamento: "LolXDMafiaCampamento",
+//         imagenCampamento: "https://assets.vice.com/content-images/contentimage/no-slug/d8582d38918fa398a67e269684fefb67.jpg"
+//     },
+//     {
+//         nombreCampamento: "OtroLindoSitio",
+//         imagenCampamento: "https://static1.squarespace.com/static/55ecd96fe4b0cee523072594/t/5734037a4c2f8582b5859ecd/1463026556921/FlashCamp_HR0075.jpg?format=1500w"
+//     },
+//     {
+//         nombreCampamento: "Guslanding",
+//         imagenCampamento: "http://cdn.traveler.es/uploads/images/thumbs/es/trav/2/s/2016/02/deja_que_te_invada_el_espiritu_de_los_60_12_ideas_para_unas_vacaciones_hippies_183389546_1200x800.jpg"
+//     },
+//     {
+//         nombreCampamento: "LolXDMafiaCampamento",
+//         imagenCampamento: "https://assets.vice.com/content-images/contentimage/no-slug/d8582d38918fa398a67e269684fefb67.jpg"
+//     },
+//     {
+//         nombreCampamento: "OtroLindoSitio",
+//         imagenCampamento: "https://static1.squarespace.com/static/55ecd96fe4b0cee523072594/t/5734037a4c2f8582b5859ecd/1463026556921/FlashCamp_HR0075.jpg?format=1500w"
+//     }
+// ];
 
 // para definir el timpo de template a usar
 app.set("view engine", "ejs");
