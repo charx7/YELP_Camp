@@ -15,7 +15,7 @@ var campamentos = [
         nombreCampamento: "LolXDMafiaCampamento",
         imagenCampamento: "https://assets.vice.com/content-images/contentimage/no-slug/d8582d38918fa398a67e269684fefb67.jpg"
     }
-]
+];
 
 // para definir el timpo de template a usar
 app.set("view engine", "ejs");
@@ -33,5 +33,5 @@ app.get("/sitiosparaacampar", function(request, response){
 
 // Listener para establecer puerto
 app.listen(3000, function(){
-    console.log("Servidor Corriendo")
+    console.log("Servidor Corriendo");
 });
