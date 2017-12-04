@@ -2,23 +2,41 @@
 <% include parciales/header %>
 
 <style>
-    img {
-        height: 100px;
-        width: 150px;
-    }
+   
 </style>
 
-<h1>Sitios para acampar XD</h1>
-<!-- Codigo para desplegar los campamentos con sus imagenes -->
-<% campamentos.forEach(function(elemento){ %>
-    <div>
-        <h4>
-            <%= elemento.nombreCampamento; %>
-        </h4>
-        <img src="<%= elemento.imagenCampamento  %>">      
+<!-- Aniadimos todo en un contenedor para hacer espacio a los lados -->
+<div class="container">
+    <!-- Aniadimos un jumbotron para mejorar el formato -->
+    <header class="jumbotron">
+        <div class="container">
+            <h1>Bienvenido a YelpCamp!</h1>
+            <p>Vea nuestros campamentos escogidos alrededor del mundo</p>
+            <p>
+                <a class="btn btn-primary btn-lg" href="/sitiosparaacampar/nuevo">Aniadir nuevo Campamento</a>
+            </p>
+        </div>
+    </header>
+
+    <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+        <!-- Codigo para desplegar los campamentos con sus imagenes -->
+        <% campamentos.forEach(function(elemento){ %>
+            <!-- Para hacerlo responsivo a 3 imagenes y despues a 2 -->
+            <div class="col-md-3 col-sm-6">
+                <div class="thumbnail">
+                    <img src="<%= elemento.imagenCampamento  %>">
+                    <div class="caption">
+                        <!-- Le da un mensaje a cada imagen -->
+                        <p> <%= elemento.nombreCampamento %> </p>
+                    </div>
+                </div>                      
+            </div>
+            
+        <% }); %>
     </div>
-    
-<% }); %>
+
+</div>
+
 
 <!-- Incluimos el footer que se guardo en el forder de parciales -->
 <% include parciales/footer %>
