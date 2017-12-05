@@ -12,7 +12,8 @@ mongoose.connect("mongodb://localhost/yelp_camp");
 // Instalacion del Schema de la BDD
 var esquemaCampamento = new mongoose.Schema({
     nombreCampamento: String,
-    imagenCampamento: String
+    imagenCampamento: String,
+    descripcionCampamento: String
 });
 // Compilando el modelo
 var campamentos = mongoose.model("Campamento", esquemaCampamento);
@@ -20,7 +21,8 @@ var campamentos = mongoose.model("Campamento", esquemaCampamento);
 // campamentos.create(
 //     {
 //         nombreCampamento: "LolXDMafiaCampamento",
-//         imagenCampamento: "https://assets.vice.com/content-images/contentimage/no-slug/d8582d38918fa398a67e269684fefb67.jpg"
+//         imagenCampamento: "https://assets.vice.com/content-images/contentimage/no-slug/d8582d38918fa398a67e269684fefb67.jpg",
+//         descripcionCampamento: "Un lindo campamento en donde vemos a muchos lory monys diciendo lolxdmafia"
 //     }, function(error, resultado){
 //     if(error) {
 //         console.log("Aiudaa Error");
@@ -109,6 +111,24 @@ app.post("/sitiosparaacampar", function(request, response){
 app.get("/sitiosparaacampar/nuevo", function(request, response){
     response.render("nuevoCampamento");
 });
+
+// Ruta para acceder a un elemento especifico de la pagina web tiene que ir despues de la ruta de nuevo
+app.get("/sitiosparaacampar/:id", function(request, response){
+    // Encontrar el sitio para acampar con el id provisto
+    var idActual = request.params.id;
+    campamentos.findById(idActual, function(error, respuesta){
+        if(error){
+            console.log(error);
+        } else {
+            // Mostrar el template con el sitio especifico
+            response.render("mostrar", {campamentoEncontrado: respuesta});
+        }
+    });
+    
+    
+});
+
+
 
 // Listener para establecer puerto
 app.listen(3000, function(){

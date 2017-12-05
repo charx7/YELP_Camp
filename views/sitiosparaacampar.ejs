@@ -29,6 +29,10 @@
                         <!-- Le da un mensaje a cada imagen -->
                         <p> <%= elemento.nombreCampamento %> </p>
                     </div>
+                    <p>
+                        <!-- Saca el numero/id unico asignado por mongoose del objeto elemento con elemento._id -->
+                        <a href="/sitiosparaacampar/<%= elemento._id %>" class="btn btn-primary">Mas Informacion</a>
+                    </p>
                 </div>                      
             </div>
             
