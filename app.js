@@ -91,9 +91,11 @@ app.post("/sitiosparaacampar", function(request, response){
     // Sacar los datos de la forma y aniadirla al arreglo de campamentos
     var nuevoNombre = request.body.nombreNuevoCampamento;
     var nuevaImagen = request.body.nombreNuevaImagen;
+    var nuevaDescripcion = request.body.nombreNuevaDescripcion;
     var nuevoSitio = {
             nombreCampamento: nuevoNombre,
-            imagenCampamento: nuevaImagen 
+            imagenCampamento: nuevaImagen,
+            descripcionCampamento: nuevaDescripcion 
     };
     // Crear un nuevo campamento en la BDD de Mongo
     campamentos.create(nuevoSitio, function(error,respuesta) {

@@ -1,2 +1,9 @@
-<h1>Esta es la pagina de mostrar info de un campamento</h1>
-<p><%= campamentoEncontrado.nombreCampamento %> </p>
+<!-- Incluimos el header que se guardo en el forder de parciales -->
+<% include parciales/header %>
+
+<h1><%= campamentoEncontrado.nombreCampamento %></h1>
+<img src="<%= campamentoEncontrado.imagenCampamento %>">
+<p><%= campamentoEncontrado.descripcionCampamento %> </p>
+
+<!-- Incluimos el footer que se guardo en el forder de parciales -->
+<% include parciales/footer %>
