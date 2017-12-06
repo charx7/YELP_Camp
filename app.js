@@ -9,14 +9,10 @@ app.use(bodyParser.urlencoded({extended: true}));
 var mongoose = require("mongoose");
 // Conectando a la BDD desde localhost (necesita estar el demonio corriendo y creando la BDD 
 mongoose.connect("mongodb://localhost/yelp_camp");
-// Instalacion del Schema de la BDD
-var esquemaCampamento = new mongoose.Schema({
-    nombreCampamento: String,
-    imagenCampamento: String,
-    descripcionCampamento: String
-});
-// Compilando el modelo
-var campamentos = mongoose.model("Campamento", esquemaCampamento);
+
+// Importando los requerimientos de esquemas de la BDD
+var campamentos = require("./Modelos/esquemaCampamentos");
+
 // Creando un campamento
 // campamentos.create(
 //     {
