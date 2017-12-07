@@ -5,7 +5,13 @@ var mongoose = require("mongoose");
 var esquemaCampamento = new mongoose.Schema({
     nombreCampamento: String,
     imagenCampamento: String,
-    descripcionCampamento: String
+    descripcionCampamento: String,
+    comentarios: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "comentario"
+        }
+    ]
 });
 // Compilando el modelo
 var campamentos = mongoose.model("Campamento", esquemaCampamento);

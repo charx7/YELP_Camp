@@ -3,6 +3,7 @@ var mongoose = require("mongoose");
 
 // Importamos los esquemas
 var campamentos = require("./Modelos/esquemaCampamentos");
+var comentario = require("./Modelos/esquemaComentarios");
 
 // Definimos los datos dummy a rellenar
 var data = [
@@ -30,11 +31,25 @@ function semillaBD () {
 
             // Funcion para aniadir datos a la BDD
             data.forEach(function (elemento){
-                campamentos.create(elemento, function(error, respuesta){
+                campamentos.create(elemento, function(error, campamentoAniadido){
                     if(error){
                         console.log(error);
                     } else {
                         console.log("Campamento aniadido");
+                        // Crear comentarios dummy en cada campamento
+                        comentario.create(
+                            {
+                                texto: "Este lugar es maravilloso por fin estoy rodeado de guslopez",
+                                autor: "GUSTRAGO"
+                            }, function (error, comment){
+                            if(error){
+                                console.log(error);
+                            } else {
+                                campamentoAniadido.comentarios.push(comment);
+                                campamentoAniadido.save();
+                                console.log("Creado comentario nuevo");
+                            }
+                        });
                     }
                 });
             });

@@ -116,6 +116,7 @@ app.get("/sitiosparaacampar/nuevo", function(request, response){
     response.render("nuevoCampamento");
 });
 
+// SHOW - Route
 // Ruta para acceder a un elemento especifico de la pagina web tiene que ir despues de la ruta de nuevo
 app.get("/sitiosparaacampar/:id", function(request, response){
     // Encontrar el sitio para acampar con el id provisto
@@ -124,6 +125,7 @@ app.get("/sitiosparaacampar/:id", function(request, response){
         if(error){
             console.log(error);
         } else {
+            console.log(respuesta);
             // Mostrar el template con el sitio especifico
             response.render("mostrar", {campamentoEncontrado: respuesta});
         }
