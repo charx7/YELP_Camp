@@ -121,7 +121,7 @@ app.get("/sitiosparaacampar/nuevo", function(request, response){
 app.get("/sitiosparaacampar/:id", function(request, response){
     // Encontrar el sitio para acampar con el id provisto
     var idActual = request.params.id;
-    campamentos.findById(idActual, function(error, respuesta){
+    campamentos.findById(idActual).populate("comentarios").exec(function(error, respuesta){
         if(error){
             console.log(error);
         } else {
