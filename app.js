@@ -13,6 +13,12 @@ mongoose.connect("mongodb://localhost/yelp_camp");
 // Importando los requerimientos de esquemas de la BDD
 var campamentos = require("./Modelos/esquemaCampamentos");
 
+// Importando el modulo de semillas para crear campamentos artificiales
+var semillaBD = require("./seeds");
+
+// Semillear la BDD
+semillaBD();
+
 // Creando un campamento
 // campamentos.create(
 //     {
