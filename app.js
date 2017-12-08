@@ -16,6 +16,9 @@ var campamentos = require("./Modelos/esquemaCampamentos");
 // Importando el modulo de semillas para crear campamentos artificiales
 var semillaBD = require("./seeds");
 
+// Requerir el modulo del esquema de comentarios
+var comentario = require("./Modelos/esquemaComentarios")
+
 // Semillear la BDD
 semillaBD();
 
@@ -146,6 +149,33 @@ app.get("/sitiosparaacampar/:id/comentarios/nuevo", function(request, response){
             response.render("comentarios/nuevoComentario", {campamento: respuesta});
         }
     });
+});
+
+app.post("/sitiosparaacampar/:id/comentarios", function(request, response){
+    // Ver el campamento usando el id lo saca del request que manda la forma
+    campamentos.findById(request.params.id, function(error, campamentoEncontrado){
+        if(error){
+            console.log(error);
+            campamentoEncontrado.redirect("/sitiosparaacampar");
+        } else {
+            comentario.create(request.body.comentario, function(error, comentarioCreado){
+                if(error){
+                    console.log(error);
+                } else {
+                    // Asociar el comentario de la forma al campamento que se le dio click
+                    console.log(comentarioCreado);
+                    campamentoEncontrado.comentarios.push(comentarioCreado);
+                    campamentoEncontrado.save();
+                    response.redirect('/sitiosparaacampar/'+ campamentoEncontrado._id);
+                }
+            });
+        }
+    });
+    // Crear un nuevo comentario
+
+    // Conectar el nuevo comentario al campamento
+
+    // Redirigir a alguna parte
 });
 
 // Listener para establecer puerto
