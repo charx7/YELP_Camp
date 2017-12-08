@@ -19,6 +19,11 @@ var semillaBD = require("./seeds");
 // Requerir el modulo del esquema de comentarios
 var comentario = require("./Modelos/esquemaComentarios")
 
+// Importando modulos de autenticacion
+var passport = require("passport");
+var LocalStrategy = require("passport-local");
+var User = require("./Modelos/user");
+
 // Semillear la BDD
 semillaBD();
 
