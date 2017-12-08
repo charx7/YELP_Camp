@@ -17,7 +17,7 @@ var campamentos = require("./Modelos/esquemaCampamentos");
 var semillaBD = require("./seeds");
 
 // Requerir el modulo del esquema de comentarios
-var comentario = require("./Modelos/esquemaComentarios")
+var comentario = require("./Modelos/esquemaComentarios");
 
 // Importando modulos de autenticacion
 var passport = require("passport");
@@ -78,6 +78,18 @@ app.set("view engine", "ejs");
 
 // Definimos los Css que se van a usar
 app.use(express.static(__dirname + "/public"));
+
+// Configuracion de PASSPORT
+app.use(require("express-session")({
+    secret: "Once again Rusty wins cutest dog!",
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 // Definimos el routing para la HOME page
 app.get("/", function(request, response){
@@ -185,6 +197,8 @@ app.post("/sitiosparaacampar/:id/comentarios", function(request, response){
 
     // Redirigir a alguna parte
 });
+
+
 
 // Listener para establecer puerto
 app.listen(3000, function(){
