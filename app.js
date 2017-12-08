@@ -83,7 +83,7 @@ app.get("/sitiosparaacampar", function(request, response){
             console.log("Aiuda error");
             console.log(error);
         } else {
-            response.render("sitiosparaacampar", {campamentos: resultado});
+            response.render("campamentos/sitiosparaacampar", {campamentos: resultado});
         }
     });
 });
@@ -113,7 +113,7 @@ app.post("/sitiosparaacampar", function(request, response){
 
 // Ruta para crear un nuevo campamento
 app.get("/sitiosparaacampar/nuevo", function(request, response){
-    response.render("nuevoCampamento");
+    response.render("campamentos/nuevoCampamento");
 });
 
 // SHOW - Route
@@ -127,14 +127,26 @@ app.get("/sitiosparaacampar/:id", function(request, response){
         } else {
             console.log(respuesta);
             // Mostrar el template con el sitio especifico
-            response.render("mostrar", {campamentoEncontrado: respuesta});
+            response.render("campamentos/mostrar", {campamentoEncontrado: respuesta});
         }
     });
     
     
 });
 
-
+// ============================
+// Rutas de Comentarios
+// ============================
+app.get("/sitiosparaacampar/:id/comentarios/nuevo", function(request, response){
+    // Encontrar campamentos por ID
+    campamentos.findById(request.params.id, function(error, respuesta){
+        if(error){
+            console.log(error);
+        } else {
+            response.render("comentarios/nuevoComentario", {campamento: respuesta});
+        }
+    });
+});
 
 // Listener para establecer puerto
 app.listen(3000, function(){

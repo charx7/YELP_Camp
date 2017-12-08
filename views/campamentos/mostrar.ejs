@@ -1,13 +1,16 @@
 <!-- Incluimos el header que se guardo en el forder de parciales -->
-<% include parciales/header %>
-
+<% include ../parciales/header %>
+<!-- Desplegado de la info de los campamentos a los que les dimos click -->
 <h1><%= campamentoEncontrado.nombreCampamento %></h1>
 <img src="<%= campamentoEncontrado.imagenCampamento %>">
 <p><%= campamentoEncontrado.descripcionCampamento %> </p>
 <% campamentoEncontrado.comentarios.forEach(function(elemento){ %>
-    <p><%=elemento.autor %> - <%= elemento.texto %></p>
+    <!-- Desplegado de los comentarios --> 
+    <p>
+        <strong><%=elemento.autor %></strong> - <%= elemento.texto %>
+    </p>
 <% }) %>
 
 
 <!-- Incluimos el footer que se guardo en el forder de parciales -->
-<% include parciales/footer %>
+<% include ../parciales/footer %>
