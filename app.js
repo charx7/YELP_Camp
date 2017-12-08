@@ -87,7 +87,7 @@ app.use(require("express-session")({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate));
+passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
@@ -198,7 +198,33 @@ app.post("/sitiosparaacampar/:id/comentarios", function(request, response){
     // Redirigir a alguna parte
 });
 
+// =====================
+// Rutas de Autorizacion
+// =====================
+// Mostrar forma de autorizacion
+app.get("/registro", function(request, response){
+    response.render("registrate");
+});
 
+app.post("/registro", function(request, response){
+    // Van los metodos de resgistro de PASSPORT
+    // Recibe los datos de la form
+    var newUser = new User({username: request.body.username});
+    User.register(newUser, request.body.password, function(error, user){
+        if(error){
+            console.log(error);
+            // En caso de error te redirige a la pagina de registro nuevamente
+            response.render("registrate");
+        } else {
+            console.log("Registro al usuario");
+            // Hacemos que el paquete de passport se encargue de la autenticacion
+            passport.authenticate("local")(request, response, function(){
+                console.log("Entro a autenticar");
+                response.redirect("/sitiosparaacampar/");
+            });
+        }
+    });
+});
 
 // Listener para establecer puerto
 app.listen(3000, function(){

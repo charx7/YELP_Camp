@@ -4,7 +4,7 @@ var passportLocalMongoose = require("passport-local-mongoose");
 
 // Definimos el esquema a utilizar para guardar a nuestros usuarios y los PW hasheados en la BDD
 var UserSchema = new mongoose.Schema({
-    usernme: String,
+    username: String,
     password: String
 });
 
