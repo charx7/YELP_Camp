@@ -30,12 +30,19 @@
                 <div class="text-right">
                     <a class="btn btn-success" href="/sitiosparaacampar/<%=campamentoEncontrado._id%>/comentarios/nuevo">Aniadir nuevo comentario</a>
                 </div>
+                <hr>
                 <!-- Empieza rendereado de los comentarios del campamento seleccionado -->
                 <% campamentoEncontrado.comentarios.forEach(function(elemento){ %>
                 <!-- Desplegado de los comentarios --> 
-                <p>
-                    <strong><%=elemento.autor %></strong> - <%= elemento.texto %>
-                </p>
+                <div class="row">
+                    <div class="col-md-12">
+                        <strong><%=elemento.autor %></strong>
+                        <span class="pull-right">Hace 10 dias</span>
+                        <p>
+                            <%= elemento.texto %>
+                        </p>
+                    </div>
+                </div>
                 <% }) %>
             </div>
         </div>
