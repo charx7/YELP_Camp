@@ -1,19 +1,46 @@
 <!-- Incluimos el header que se guardo en el forder de parciales -->
 <% include ../parciales/header %>
-<!-- Desplegado de la info de los campamentos a los que les dimos click -->
-<h1><%= campamentoEncontrado.nombreCampamento %></h1>
-<img src="<%= campamentoEncontrado.imagenCampamento %>">
-<p><%= campamentoEncontrado.descripcionCampamento %> </p>
-<p>
-    <a class="btn btn-success" href="/sitiosparaacampar/<%=campamentoEncontrado._id%>/comentarios/nuevo">Aniadir nuevo comentario</a>
-</p>
-<!-- Empieza rendereado de los comentarios del campamento seleccionado -->
-<% campamentoEncontrado.comentarios.forEach(function(elemento){ %>
-    <!-- Desplegado de los comentarios --> 
-    <p>
-        <strong><%=elemento.autor %></strong> - <%= elemento.texto %>
-    </p>
-<% }) %>
+<!-- Contenedores para la barra lateral donde ira el mapa -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <p class="lead">
+                YELP CAMP
+            </p>
+            <!-- Clases de BS para seleccionar elementos -->
+            <div class="list-group">
+                <li class="list-group-item active">Info1</li>
+                <li class="list-group-item">Info2</li>
+                <li class="list-group-item">Info3</li>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="thumbnail">
+                <!-- Desplegado de la info de los campamentos a los que les dimos click -->
+                <img class="image-responsive" src="<%= campamentoEncontrado.imagenCampamento %>">
+                <div class="caption-full">
+                    <h4 class="pull-right">9.00$</h4>
+                    <h4><a><%= campamentoEncontrado.nombreCampamento %></a></h4>
+                    <p><%= campamentoEncontrado.descripcionCampamento %> </p>
+                </div>
+            </div>
+            <!-- Ahora va un div con clase well para el despliegue de los comentarios -->
+            <div class="well">
+                <!-- Va el boton de BS -->
+                <div class="text-right">
+                    <a class="btn btn-success" href="/sitiosparaacampar/<%=campamentoEncontrado._id%>/comentarios/nuevo">Aniadir nuevo comentario</a>
+                </div>
+                <!-- Empieza rendereado de los comentarios del campamento seleccionado -->
+                <% campamentoEncontrado.comentarios.forEach(function(elemento){ %>
+                <!-- Desplegado de los comentarios --> 
+                <p>
+                    <strong><%=elemento.autor %></strong> - <%= elemento.texto %>
+                </p>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <!-- Incluimos el footer que se guardo en el forder de parciales -->
