@@ -68,8 +68,11 @@ semillaBD();
 //     }
 // ];
 
-// para definir el timpo de template a usar
+// Para definir el timpo de template a usar
 app.set("view engine", "ejs");
+
+// Definimos los Css que se van a usar
+app.use(express.static(__dirname + "/public"));
 
 // Definimos el routing para la HOME page
 app.get("/", function(request, response){

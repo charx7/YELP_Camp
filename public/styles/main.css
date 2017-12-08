@@ -1,0 +1,15 @@
+/* Definimos todos los estilos de las imagenes dentro de los thumbnails*/
+.thumbnail img {
+    width: 100%;
+}
+
+/* Se quita el espacio entre las imagenes*/
+.thumbnail {
+    padding: 0;
+}
+
+/* Se aniade espacio entre los caption fulls */
+
+.thumbnail .caption-full {
+    padding: 9px;
+}
