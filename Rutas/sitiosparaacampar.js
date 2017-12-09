@@ -25,7 +25,7 @@ router.get("/sitiosparaacampar", function(request, response){
 });
 
 // Ruteo para el metodo POST de aniadir sitios para acampar
-router.post("/sitiosparaacampar", function(request, response){
+router.post("/sitiosparaacampar", isLoggedIn, function(request, response){
     // Sacar los datos de la forma y aniadirla al arreglo de campamentos
     var nuevoNombre = request.body.nombreNuevoCampamento;
     var nuevaImagen = request.body.nombreNuevaImagen;
@@ -48,7 +48,7 @@ router.post("/sitiosparaacampar", function(request, response){
 });
 
 // Ruta para crear un nuevo campamento
-router.get("/sitiosparaacampar/nuevo", function(request, response){
+router.get("/sitiosparaacampar/nuevo", isLoggedIn, function(request, response){
     response.render("campamentos/nuevoCampamento");
 });
 
