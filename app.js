@@ -30,7 +30,7 @@ var rutasCampamentos = require("./Rutas/sitiosparaacampar"),
     rutasIndex       = require("./Rutas/index");
 
 // Semillear la BDD
-semillaBD();
+//semillaBD();
 
 // Creando un campamento
 // campamentos.create(

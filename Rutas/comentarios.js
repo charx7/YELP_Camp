@@ -3,10 +3,11 @@
 // ============================
 // Requisitos de Importacion
 var express = require("express");
-var router = express.Router();
+var router = express.Router({mergeParams: true});
 var campamentos = require("../Modelos/esquemaCampamentos");
 var comentario  = require("../Modelos/esquemaComentarios"); 
 
+// Crear Comentarios
 router.get("/sitiosparaacampar/:id/comentarios/nuevo", isLoggedIn, function(request, response){
     // Encontrar campamentos por ID
     campamentos.findById(request.params.id, function(error, respuesta){
@@ -18,7 +19,7 @@ router.get("/sitiosparaacampar/:id/comentarios/nuevo", isLoggedIn, function(requ
     });
 });
 
-router.post("/sitiosparaacampar/:id/comentarios", function(request, response){
+router.post("/sitiosparaacampar/:id/comentarios", isLoggedIn, function(request, response){
     // Ver el campamento usando el id lo saca del request que manda la forma
     campamentos.findById(request.params.id, function(error, campamentoEncontrado){
         if(error){
@@ -31,6 +32,12 @@ router.post("/sitiosparaacampar/:id/comentarios", function(request, response){
                 } else {
                     // Asociar el comentario de la forma al campamento que se le dio click
                     console.log(comentarioCreado);
+                    // Aniadir username e id al comentario
+                    currentUserId = request.user._id;
+                    comentarioCreado.autor.id = currentUserId;
+                    comentarioCreado.autor.username = request.user.username;
+                    // Salvar el comentario
+                    comentarioCreado.save();
                     campamentoEncontrado.comentarios.push(comentarioCreado);
                     campamentoEncontrado.save();
                     response.redirect('/sitiosparaacampar/'+ campamentoEncontrado._id);
