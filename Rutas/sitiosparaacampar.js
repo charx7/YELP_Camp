@@ -77,6 +77,20 @@ router.get("/sitiosparaacampar/:id", function(request, response){
     
 });
 
+// Ruta para EDITAR un campamento
+router.get("/sitiosparaacampar/:id/editar", function(request, response){
+    campamentos.findById(request.params.id, function(error, respuestaAlQuery){
+        if(error){
+            console.log(error);
+            res.redirect("/sitiosparaacampar");
+        } else {
+            response.render("campamentos/editar",{campamento: respuestaAlQuery});
+        }
+    });
+});
+// UPDATE la ruta de campamento
+
+
 // Middleware que verifica si el usuario esta logeado o no
 function isLoggedIn(request, response, next){
     if(request.isAuthenticated()){
