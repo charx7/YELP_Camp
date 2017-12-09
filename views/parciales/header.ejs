@@ -18,9 +18,12 @@
             <!-- Parte izquierda de la barra de navegacion -->
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/login">Login</a></li>
-                    <li><a href="/registro">Sign up</a></li>
-                    <li><a href="/logout">Logout</a></li>
+                    <% if(!currentUser){  %>
+                        <li><a href="/login">Login</a></li>
+                        <li><a href="/registro">Sign up</a></li>
+                    <% } else {  %>
+                        <li><a href="/logout">Logout</a></li>
+                    <% } %>
                 </ul>
             </div>
         </div>

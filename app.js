@@ -91,6 +91,12 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+// Middleware que hace una variable a pasar el template segun si el usuario esta logeado o no
+app.use(function(request, response, next){
+    response.locals.currentUser = request.user;
+    next();
+});
+
 // Definimos el routing para la HOME page
 app.get("/", function(request, response){
     response.render("landing");
@@ -106,7 +112,7 @@ app.get("/sitiosparaacampar", function(request, response){
             console.log("Aiuda error");
             console.log(error);
         } else {
-            response.render("campamentos/sitiosparaacampar", {campamentos: resultado});
+            response.render("campamentos/sitiosparaacampar", {campamentos: resultado, currentUser: request.user});
         }
     });
 });
