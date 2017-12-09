@@ -29,6 +29,9 @@ var rutasCampamentos = require("./Rutas/sitiosparaacampar"),
     rutasComentarios = require("./Rutas/comentarios"),
     rutasIndex       = require("./Rutas/index");
 
+// Importar requerimientos de override de metodos
+var methodOverride   = require("method-override");
+
 // Semillear la BDD
 //semillaBD();
 
@@ -81,6 +84,9 @@ app.set("view engine", "ejs");
 
 // Definimos los Css que se van a usar
 app.use(express.static(__dirname + "/public"));
+
+// Definimos el uso del modulo method Override
+app.use(methodOverride("_method"));
 
 // Configuracion de PASSPORT
 app.use(require("express-session")({
