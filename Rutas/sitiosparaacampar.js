@@ -30,17 +30,24 @@ router.post("/sitiosparaacampar", isLoggedIn, function(request, response){
     var nuevoNombre = request.body.nombreNuevoCampamento;
     var nuevaImagen = request.body.nombreNuevaImagen;
     var nuevaDescripcion = request.body.nombreNuevaDescripcion;
+    var nuevoAutor = {
+        id: request.user._id,
+        username: request.user.username
+    };
     var nuevoSitio = {
             nombreCampamento: nuevoNombre,
             imagenCampamento: nuevaImagen,
-            descripcionCampamento: nuevaDescripcion 
+            descripcionCampamento: nuevaDescripcion,
+            autor: nuevoAutor 
     };
+    console.log(request.user);
     // Crear un nuevo campamento en la BDD de Mongo
     campamentos.create(nuevoSitio, function(error,respuesta) {
         if(error){
             console.log("Error Creando el campamento");
         } else {
             // Redirigir a la pagina de sitiosparaacampar con metodo GET
+            console.log(respuesta);
             response.redirect("/sitiosparaacampar");
         }
     });

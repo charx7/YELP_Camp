@@ -6,6 +6,13 @@ var esquemaCampamento = new mongoose.Schema({
     nombreCampamento: String,
     imagenCampamento: String,
     descripcionCampamento: String,
+    autor: {
+        id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+        },
+        username: String
+    },
     comentarios: [
         {
             type: mongoose.Schema.Types.ObjectId,
