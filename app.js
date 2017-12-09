@@ -226,6 +226,21 @@ app.post("/registro", function(request, response){
     });
 });
 
+// Mostrar forma de login
+app.get("/login", function(request,response){
+    response.render("login");
+});
+
+// Metodos de POST de login se encarga de manejar el login
+app.post("/login", passport.authenticate("local", 
+    {
+        successRedirect: "/sitiosparaacampar",
+        failureRedirect: "/login"
+    }), function(request, response){
+});
+
+
+
 // Listener para establecer puerto
 app.listen(3000, function(){
     console.log("Servidor Corriendo");
