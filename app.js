@@ -239,7 +239,11 @@ app.post("/login", passport.authenticate("local",
     }), function(request, response){
 });
 
-
+// Ruteo de Logout
+app.get("/logout", function(request, response){
+    request.logout();
+    response.redirect("/sitiosparaacampar");
+});
 
 // Listener para establecer puerto
 app.listen(3000, function(){
