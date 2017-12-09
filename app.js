@@ -24,6 +24,11 @@ var passport = require("passport");
 var LocalStrategy = require("passport-local");
 var User = require("./Modelos/user");
 
+// Importando los requesitos para el ruteo
+var rutasCampamentos = require("./Rutas/sitiosparaacampar"),
+    rutasComentarios = require("./Rutas/comentarios"),
+    rutasIndex       = require("./Rutas/index");
+
 // Semillear la BDD
 semillaBD();
 
@@ -42,8 +47,6 @@ semillaBD();
 //         console.log(resultado);
 //     }
 // });
-
-
 
 // Definimos temporalmente uno arreglo con sitios para acampar en formato objeto de javacript
 // var campamentos = [
@@ -97,166 +100,11 @@ app.use(function(request, response, next){
     next();
 });
 
-// Definimos el routing para la HOME page
-app.get("/", function(request, response){
-    response.render("landing");
-});
+// Definimos el uso de las rutas para que los use la APP
+app.use(rutasIndex);
+app.use(rutasComentarios);
+app.use(rutasCampamentos);
 
-app.get("/sitiosparaacampar", function(request, response){
-    // Pasa el objeto de arreglo de campamentos
-    //response.render("sitiosparaacampar", {campamentos: campamentos});
-
-    // Sacar todos los campamentos de la BDD
-    campamentos.find({}, function(error, resultado) {
-        if(error){
-            console.log("Aiuda error");
-            console.log(error);
-        } else {
-            response.render("campamentos/sitiosparaacampar", {campamentos: resultado, currentUser: request.user});
-        }
-    });
-});
-
-// Ruteo para el metodo POST de aniadir sitios para acampar
-app.post("/sitiosparaacampar", function(request, response){
-    // Sacar los datos de la forma y aniadirla al arreglo de campamentos
-    var nuevoNombre = request.body.nombreNuevoCampamento;
-    var nuevaImagen = request.body.nombreNuevaImagen;
-    var nuevaDescripcion = request.body.nombreNuevaDescripcion;
-    var nuevoSitio = {
-            nombreCampamento: nuevoNombre,
-            imagenCampamento: nuevaImagen,
-            descripcionCampamento: nuevaDescripcion 
-    };
-    // Crear un nuevo campamento en la BDD de Mongo
-    campamentos.create(nuevoSitio, function(error,respuesta) {
-        if(error){
-            console.log("Error Creando el campamento");
-        } else {
-            // Redirigir a la pagina de sitiosparaacampar con metodo GET
-            response.redirect("/sitiosparaacampar");
-        }
-    });
-    //campamentos.push(nuevoSitio);
-});
-
-// Ruta para crear un nuevo campamento
-app.get("/sitiosparaacampar/nuevo", function(request, response){
-    response.render("campamentos/nuevoCampamento");
-});
-
-// SHOW - Route
-// Ruta para acceder a un elemento especifico de la pagina web tiene que ir despues de la ruta de nuevo
-app.get("/sitiosparaacampar/:id", function(request, response){
-    // Encontrar el sitio para acampar con el id provisto
-    var idActual = request.params.id;
-    campamentos.findById(idActual).populate("comentarios").exec(function(error, respuesta){
-        if(error){
-            console.log(error);
-        } else {
-            console.log(respuesta);
-            // Mostrar el template con el sitio especifico
-            response.render("campamentos/mostrar", {campamentoEncontrado: respuesta});
-        }
-    });
-    
-    
-});
-
-// ============================
-// Rutas de Comentarios
-// ============================
-app.get("/sitiosparaacampar/:id/comentarios/nuevo", isLoggedIn, function(request, response){
-    // Encontrar campamentos por ID
-    campamentos.findById(request.params.id, function(error, respuesta){
-        if(error){
-            console.log(error);
-        } else {
-            response.render("comentarios/nuevoComentario", {campamento: respuesta});
-        }
-    });
-});
-
-app.post("/sitiosparaacampar/:id/comentarios", function(request, response){
-    // Ver el campamento usando el id lo saca del request que manda la forma
-    campamentos.findById(request.params.id, function(error, campamentoEncontrado){
-        if(error){
-            console.log(error);
-            campamentoEncontrado.redirect("/sitiosparaacampar");
-        } else {
-            comentario.create(request.body.comentario, function(error, comentarioCreado){
-                if(error){
-                    console.log(error);
-                } else {
-                    // Asociar el comentario de la forma al campamento que se le dio click
-                    console.log(comentarioCreado);
-                    campamentoEncontrado.comentarios.push(comentarioCreado);
-                    campamentoEncontrado.save();
-                    response.redirect('/sitiosparaacampar/'+ campamentoEncontrado._id);
-                }
-            });
-        }
-    });
-    // Crear un nuevo comentario
-
-    // Conectar el nuevo comentario al campamento
-
-    // Redirigir a alguna parte
-});
-
-// =====================
-// Rutas de Autorizacion
-// =====================
-// Mostrar forma de autorizacion
-app.get("/registro", function(request, response){
-    response.render("registrate");
-});
-
-app.post("/registro", function(request, response){
-    // Van los metodos de resgistro de PASSPORT
-    // Recibe los datos de la form
-    var newUser = new User({username: request.body.username});
-    User.register(newUser, request.body.password, function(error, user){
-        if(error){
-            console.log(error);
-            // En caso de error te redirige a la pagina de registro nuevamente
-            response.render("registrate");
-        } else {
-            console.log("Registro al usuario");
-            // Hacemos que el paquete de passport se encargue de la autenticacion
-            passport.authenticate("local")(request, response, function(){
-                console.log("Entro a autenticar");
-                response.redirect("/sitiosparaacampar/");
-            });
-        }
-    });
-});
-
-// Mostrar forma de login
-app.get("/login", function(request,response){
-    response.render("login");
-});
-
-// Metodos de POST de login se encarga de manejar el login
-app.post("/login", passport.authenticate("local", 
-    {
-        successRedirect: "/sitiosparaacampar",
-        failureRedirect: "/login"
-    }), function(request, response){
-});
-
-// Ruteo de Logout
-app.get("/logout", function(request, response){
-    request.logout();
-    response.redirect("/sitiosparaacampar");
-});
-// Middleware que verifica si el usuario esta logeado o no
-function isLoggedIn(request, response, next){
-    if(request.isAuthenticated()){
-        return next();
-    }
-    response.redirect("/login");
-}
 
 // Listener para establecer puerto
 app.listen(3000, function(){
