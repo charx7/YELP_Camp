@@ -160,7 +160,7 @@ app.get("/sitiosparaacampar/:id", function(request, response){
 // ============================
 // Rutas de Comentarios
 // ============================
-app.get("/sitiosparaacampar/:id/comentarios/nuevo", function(request, response){
+app.get("/sitiosparaacampar/:id/comentarios/nuevo", isLoggedIn, function(request, response){
     // Encontrar campamentos por ID
     campamentos.findById(request.params.id, function(error, respuesta){
         if(error){
@@ -244,6 +244,13 @@ app.get("/logout", function(request, response){
     request.logout();
     response.redirect("/sitiosparaacampar");
 });
+// Middleware que verifica si el usuario esta logeado o no
+function isLoggedIn(request, response, next){
+    if(request.isAuthenticated()){
+        return next();
+    }
+    response.redirect("/login");
+}
 
 // Listener para establecer puerto
 app.listen(3000, function(){
