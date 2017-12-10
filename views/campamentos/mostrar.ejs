@@ -23,6 +23,8 @@
                     <h4><a><%= campamentoEncontrado.nombreCampamento %></a></h4>
                     <p><%= campamentoEncontrado.descripcionCampamento %> </p>
                     <p><em>Registrado por: <%= campamentoEncontrado.autor.username %></em></p>
+                    <!-- Boton para la edicion del campamento mostrado -->
+                    <a class="btn btn-warning" href="/sitiosparaacampar/<%= campamentoEncontrado._id %>/editar">Editar</a>
                 </div>
             </div>
             <!-- Ahora va un div con clase well para el despliegue de los comentarios -->
