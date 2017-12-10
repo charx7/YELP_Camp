@@ -34,6 +34,15 @@ var methodOverride   = require("method-override");
 
 // Semillear la BDD
 //semillaBD();
+// Para elminar campamentos
+// campamentos.remove({}, function(error){
+//     if(error){
+//         console.log(error);
+//     } else {
+//         console.log("campamentos removidos");
+//     }
+// });
+
 
 // Creando un campamento
 // campamentos.create(

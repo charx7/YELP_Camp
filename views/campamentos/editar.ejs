@@ -9,16 +9,16 @@
         <h1 style="text-align: center;">Edita el Campamento <%=campamento.nombreCampamento %></h1>
         <!-- Estilo para centrar la forma y hacer que ocupe solo 30% del total del contenedor -->
         <div style="width: 30%; margin: 25px auto;">
-            <form action="/sitiosparaacampar/<%=campamento._id%>/editar?_method=PUT" method="POST">
+            <form action="/sitiosparaacampar/<%= campamento._id %>?_method=PUT" method="POST">
                 <!-- Se aniadieron las clases de BS para form control y botones bonitos -->
                 <div class="form-group">
-                    <input class="form-control" name="nombreNuevoCampamento" type="text" placeholder="nombre">
+                    <input class="form-control" name="editar[nombreCampamento]" type="text" value="<%=campamento.nombreCampamento%>">
                 </div>
                 <div class="form-group">
-                    <input class="form-control" name="nombreNuevaImagen" type="text" placeholder="URL de la imagen">
+                    <input class="form-control" name="editar[imagenCampamento]" type="text" value="<%=campamento.imagenCampamento%>">
                 </div>
                 <div class="form-group">
-                    <input class="form-control" name="nombreNuevaDescripcion" type="text" placeholder="Descripcion del Campamento">
+                    <input class="form-control" name="editar[descripcionCampamento]" type="text" value="<%=campamento.descripcionCampamento%>">
                 </div>
                 <div class="form-group">
                     <button class="btn btn-default btn-block btn-primary btn-lg">Submit!</button>
