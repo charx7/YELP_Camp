@@ -1,9 +1,25 @@
-<!-- Incluimos el header que se guardo en el forder de parciales -->
-<% include parciales/header %>
-
-<h1>Home Page</h1>
-<p>Bienvenidos a YelpCamp</p>
-<a href="/sitiosparaacampar">Ver todos los sitios para acampar.</a>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>YelpCamp</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/styles/landing.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript" async></script>
+    </head>
+    <body>
+    
+    <div id="landing-header">
+ 		<h1>Bienvenido a YelpCamp!</h1>
+		<a href="/sitiosparaacampar" class="btn btn-lg btn-success">Ver Todos los Campamentos</a>
+    </div>
+    
+    <ul class="slideshow">
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
 
 <!-- Incluimos el footer que se guardo en el forder de parciales -->
 <% include parciales/footer %>
