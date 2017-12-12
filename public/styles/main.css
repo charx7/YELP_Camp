@@ -13,3 +13,8 @@
 .thumbnail .caption-full {
     padding: 9px;
 }
+
+/* Estilos para la forma y el boton de borrado de un campamento */
+#formaBorrar{
+    display: inline;
+}
