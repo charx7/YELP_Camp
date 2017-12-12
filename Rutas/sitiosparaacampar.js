@@ -77,30 +77,13 @@ router.get("/sitiosparaacampar/:id", function(request, response){
     
 });
 
-// Ruta para EDITAR un campamento
-router.get("/sitiosparaacampar/:id/editar", function(request, response){
-
-    // Esta el usuario autenticado?
-    if(request.isAuthenticated()){
-
-
-        campamentos.findById(request.params.id, function(error, respuestaAlQuery){
-            if(error){
-                console.log(error);
-                res.redirect("/sitiosparaacampar");
-            } else {
-                // Verifica si el usuario es dueño del campamento para permitirle editar
-                if(respuestaAlQuery.autor.id.equals(request.user._id)){
-                    console.log("Entro a editar")
-                    response.render("campamentos/editar",{campamento: respuestaAlQuery});
-                } else {
-                    response.send("No tienes Permiso XD");
-                }
-            }
-        });
-    }   else {
-        response.send("Necesitas Logearte");
-    }
+// Ruta para EDITAR un campamento ==Ahora con Middleware==
+router.get("/sitiosparaacampar/:id/editar", verificaDuenioCampamento, function(request, response){
+    campamentos.findById(request.params.id, function(error, respuestaAlQuery){
+        // Hace el render de la pagina
+        response.render("campamentos/editar",{campamento: respuestaAlQuery});
+        
+    });    
 });
 
 // UPDATE la ruta de campamento
@@ -137,6 +120,28 @@ function isLoggedIn(request, response, next){
         return next();
     }
     response.redirect("/login");
+}
+
+
+// Middleware que verifica si el usuario que intenta entrar a editar el campamento o borrarlo es su creador o no
+function verificaDuenioCampamento(request, response, next) {
+    // Esta el usuario autenticado?
+    if(request.isAuthenticated()){
+        campamentos.findById(request.params.id, function(error, respuestaQuery){
+            if(error){
+                res.redirect("back");
+            } else {
+                // Verifica si el usuario es duenio del campamento = tiene el mismo id
+                if(respuestaQuery.autor.id.equals(request.user._id)){
+                    next();
+                } else{
+                    response.redirect("back");
+                }
+            }
+        }); 
+    } else {
+        response.redirect("back");
+    }
 }
 
 // Exportamos el routador
