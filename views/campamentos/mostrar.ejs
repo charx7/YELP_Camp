@@ -23,12 +23,15 @@
                     <h4><a><%= campamentoEncontrado.nombreCampamento %></a></h4>
                     <p><%= campamentoEncontrado.descripcionCampamento %> </p>
                     <p><em>Registrado por: <%= campamentoEncontrado.autor.username %></em></p>
-                    <!-- Boton para la edicion del campamento mostrado -->
-                    <a class="btn btn-warning btn-xs" href="/sitiosparaacampar/<%= campamentoEncontrado._id %>/editar">Editar</a>
-                    <!-- Aqui va la logica de la forma de HTML para eliminar un campamento -->
-                    <form id="formaBorrar" action="/sitiosparaacampar/<%= campamentoEncontrado._id %>?_method=DELETE" method="POST">
-                        <button class="btn btn-danger btn-xs">Eliminar</button>
-                    </form>
+                    <!-- Logica para no se muestren los botones de EDITAR o ELIMINAR si no estas autorizado -->
+                    <% if(currentUser && campamentoEncontrado.autor.id.equals(currentUser._id)){ %>
+                        <!-- Boton para la edicion del campamento mostrado -->
+                        <a class="btn btn-warning btn-xs" href="/sitiosparaacampar/<%= campamentoEncontrado._id %>/editar">Editar</a>
+                        <!-- Aqui va la logica de la forma de HTML para eliminar un campamento -->
+                        <form id="formaBorrar" action="/sitiosparaacampar/<%= campamentoEncontrado._id %>?_method=DELETE" method="POST">
+                            <button class="btn btn-danger btn-xs">Eliminar</button>
+                        </form>
+                    <% } %>
                 </div>
             </div>
             <!-- Ahora va un div con clase well para el despliegue de los comentarios -->
