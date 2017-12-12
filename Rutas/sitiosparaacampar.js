@@ -82,12 +82,11 @@ router.get("/sitiosparaacampar/:id/editar", verificaDuenioCampamento, function(r
     campamentos.findById(request.params.id, function(error, respuestaAlQuery){
         // Hace el render de la pagina
         response.render("campamentos/editar",{campamento: respuestaAlQuery});
-        
     });    
 });
 
 // UPDATE la ruta de campamento
-router.put("/sitiosparaacampar/:id", function(request, response) {
+router.put("/sitiosparaacampar/:id", verificaDuenioCampamento, function(request, response) {
     // Encontrar y hacer update a las caractaristicas del campamento correcto
     console.log("el id a editar es: " + request.params.id);
     campamentos.findByIdAndUpdate(request.params.id, request.body.editar, function(error, respuesta){
@@ -103,7 +102,7 @@ router.put("/sitiosparaacampar/:id", function(request, response) {
 });
 
 // Ruteo para ELIMINAR algun campamento
-router.delete("/sitiosparaacampar/:id", function(request, response){
+router.delete("/sitiosparaacampar/:id", verificaDuenioCampamento, function(request, response){
     // Instruccion de mongoose para eliminar un campamento
      campamentos.findByIdAndRemove(request.params.id, function(error){
         if(error){
