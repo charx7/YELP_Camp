@@ -79,15 +79,30 @@ router.get("/sitiosparaacampar/:id", function(request, response){
 
 // Ruta para EDITAR un campamento
 router.get("/sitiosparaacampar/:id/editar", function(request, response){
-    campamentos.findById(request.params.id, function(error, respuestaAlQuery){
-        if(error){
-            console.log(error);
-            res.redirect("/sitiosparaacampar");
-        } else {
-            response.render("campamentos/editar",{campamento: respuestaAlQuery});
-        }
-    });
+
+    // Esta el usuario autenticado?
+    if(request.isAuthenticated()){
+
+
+        campamentos.findById(request.params.id, function(error, respuestaAlQuery){
+            if(error){
+                console.log(error);
+                res.redirect("/sitiosparaacampar");
+            } else {
+                // Verifica si el usuario es dueño del campamento para permitirle editar
+                if(respuestaAlQuery.autor.id.equals(request.user._id)){
+                    console.log("Entro a editar")
+                    response.render("campamentos/editar",{campamento: respuestaAlQuery});
+                } else {
+                    response.send("No tienes Permiso XD");
+                }
+            }
+        });
+    }   else {
+        response.send("Necesitas Logearte");
+    }
 });
+
 // UPDATE la ruta de campamento
 router.put("/sitiosparaacampar/:id", function(request, response) {
     // Encontrar y hacer update a las caractaristicas del campamento correcto
@@ -115,7 +130,6 @@ router.delete("/sitiosparaacampar/:id", function(request, response){
         }
      });
 });
-
 
 // Middleware que verifica si el usuario esta logeado o no
 function isLoggedIn(request, response, next){
