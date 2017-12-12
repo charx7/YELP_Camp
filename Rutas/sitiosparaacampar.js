@@ -104,6 +104,18 @@ router.put("/sitiosparaacampar/:id", function(request, response) {
     // Redirigir a la pagina de mostrar el campamento editado 
 });
 
+// Ruteo para ELIMINAR algun campamento
+router.delete("/sitiosparaacampar/:id", function(request, response){
+    // Instruccion de mongoose para eliminar un campamento
+     campamentos.findByIdAndRemove(request.params.id, function(error){
+        if(error){
+            response.redirect("/sitiosparaacampar");
+        } else {
+            response.redirect("/sitiosparaacampar");
+        }
+     });
+});
+
 
 // Middleware que verifica si el usuario esta logeado o no
 function isLoggedIn(request, response, next){
